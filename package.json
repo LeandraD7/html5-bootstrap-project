@@ -1,0 +1,14 @@
+{
+  "name": "html5-bootstrap-project",
+  "version": "1.0.0",
+  "description": "A simple HTML5 project using Bootstrap for styling.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "live-server src"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^5.3.0"
+  }
+}
