@@ -37,6 +37,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
         function validateNumberInput(input) {
             input.value = input.value.replace(/[^0-9.]/g, '');
@@ -48,9 +49,34 @@
             if (!isNaN(energyConsumption) && !isNaN(emissionFactor)) {
                 const result = energyConsumption * emissionFactor;
                 document.getElementById('result').innerText = `Huella de Carbono: ${result}`;
+                confettiAnimation();
             } else {
                 document.getElementById('result').innerText = 'Por favor, ingrese valores válidos.';
             }
+        }
+
+        function confettiAnimation() {
+            const duration = 2 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 2,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 2,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
     </script>
 </body>
