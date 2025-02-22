@@ -6,6 +6,21 @@
     <title>Huella de Carbono de productos CADIS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        #result {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,8 +32,8 @@
             <p>Saludos a Vaneza, Valeria, Dante, Anelis y mamita.</p>
             <form>
                 <div class="form-group">
-                    <label for="energyConsumption">Consumo de Energía Eléctrica</label>
-                    <input type="text" class="form-control" id="energyConsumption" placeholder="Ingrese el consumo de energía eléctrica" oninput="validateNumberInput(this)">
+                    <label for="energyConsumption">Consumo de energía en kwh</label>
+                    <input type="text" class="form-control" id="energyConsumption" placeholder="Ingrese el consumo de energía en kwh" oninput="validateNumberInput(this)">
                 </div>
                 <div class="form-group">
                     <label for="emissionFactor">Factor de emisión</label>
@@ -49,7 +64,9 @@
             const emissionFactor = parseFloat(document.getElementById('emissionFactor').value);
             if (!isNaN(energyConsumption) && !isNaN(emissionFactor)) {
                 const result = energyConsumption * emissionFactor;
-                document.getElementById('result').innerText = `Huella de Carbono: ${result}`;
+                const resultElement = document.getElementById('result');
+                resultElement.innerText = `Huella de Carbono: ${result}`;
+                resultElement.style.display = 'block';
                 confettiAnimation();
             } else {
                 document.getElementById('result').innerText = 'Por favor, ingrese valores válidos.';
