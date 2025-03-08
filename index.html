@@ -32,12 +32,36 @@
             <p>Saludos a Vaneza, Valeria, Dante, Anelis y mamita.</p>
             <form>
                 <div class="form-group">
-                    <label for="energyConsumption">Consumo de energía en kwh</label>
-                    <input type="text" class="form-control" id="energyConsumption" placeholder="Ingrese el consumo de energía en kwh" oninput="validateNumberInput(this)">
+                    <label for="householdMembers">¿Cuántas personas viven en tu casa?</label>
+                    <input type="text" class="form-control" id="householdMembers" placeholder="Ingrese el número de personas" oninput="validateNumberInput(this)">
                 </div>
                 <div class="form-group">
-                    <label for="emissionFactor">Factor de emisión</label>
-                    <input type="text" class="form-control" id="emissionFactor" placeholder="Ingrese el factor de emisión" oninput="validateNumberInput(this)">
+                    <label for="electricityCost">¿Cuánto pagas al mes por el servicio de energía eléctrica?</label>
+                    <input type="text" class="form-control" id="electricityCost" placeholder="Ingrese el costo mensual" oninput="validateNumberInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="waterCost">¿Cuánto pagas al mes por el servicio de agua potable?</label>
+                    <input type="text" class="form-control" id="waterCost" placeholder="Ingrese el costo mensual" oninput="validateNumberInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="gasCost">¿Cuánto pagas al mes por el servicio de gas natural?</label>
+                    <input type="text" class="form-control" id="gasCost" placeholder="Ingrese el costo mensual" oninput="validateNumberInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="fuelCost">¿Cuánto pagas a la semana por el consumo de combustible en tu automóvil?</label>
+                    <input type="text" class="form-control" id="fuelCost" placeholder="Ingrese el costo semanal" oninput="validateNumberInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="publicTransportUsage">¿Cuántas veces a la semana utilizas el transporte público?</label>
+                    <input type="text" class="form-control" id="publicTransportUsage" placeholder="Ingrese el número de veces" oninput="validateNumberInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="domesticFlights">¿Cuántas veces al año viajas en avión a destinos nacionales?</label>
+                    <input type="text" class="form-control" id="domesticFlights" placeholder="Ingrese el número de veces" oninput="validateNumberInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="internationalFlights">¿Cuántas veces al año viajas en avión a destinos internacionales?</label>
+                    <input type="text" class="form-control" id="internationalFlights" placeholder="Ingrese el número de veces" oninput="validateNumberInput(this)">
                 </div>
                 <button type="button" class="btn btn-primary" onclick="calculateCarbonFootprint()">Calcular Huella de Carbono</button>
             </form>
@@ -60,10 +84,17 @@
         }
 
         function calculateCarbonFootprint() {
-            const energyConsumption = parseFloat(document.getElementById('energyConsumption').value);
-            const emissionFactor = parseFloat(document.getElementById('emissionFactor').value);
-            if (!isNaN(energyConsumption) && !isNaN(emissionFactor)) {
-                const result = energyConsumption * emissionFactor;
+            const householdMembers = parseFloat(document.getElementById('householdMembers').value);
+            const electricityCost = parseFloat(document.getElementById('electricityCost').value);
+            const waterCost = parseFloat(document.getElementById('waterCost').value);
+            const gasCost = parseFloat(document.getElementById('gasCost').value);
+            const fuelCost = parseFloat(document.getElementById('fuelCost').value);
+            const publicTransportUsage = parseFloat(document.getElementById('publicTransportUsage').value);
+            const domesticFlights = parseFloat(document.getElementById('domesticFlights').value);
+            const internationalFlights = parseFloat(document.getElementById('internationalFlights').value);
+
+            if (!isNaN(householdMembers) && !isNaN(electricityCost) && !isNaN(waterCost) && !isNaN(gasCost) && !isNaN(fuelCost) && !isNaN(publicTransportUsage) && !isNaN(domesticFlights) && !isNaN(internationalFlights)) {
+                const result = householdMembers * 100; // Ejemplo de cálculo
                 const resultElement = document.getElementById('result');
                 resultElement.innerText = `Huella de Carbono: ${result}`;
                 resultElement.style.display = 'block';
