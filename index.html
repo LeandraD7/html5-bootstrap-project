@@ -145,20 +145,27 @@
     }
 
     function calculateCarbonFootprint() {
-        const householdMembers = parseFloat(document.getElementById('householdMembers').value);
+        const householdMembers = parseFloat(document.getElementById('householdMembers').value) || 1 ;
         const electricityCost = parseFloat(document.getElementById('electricityCost').value);
-        const waterCost = parseFloat(document.getElementById('waterCost').value);
+        const waterCost = parseFloat(document.getElementById('waterCost').value)
         const gasCost = parseFloat(document.getElementById('gasCost').value);
-        const fuelCost = parseFloat(document.getElementById('fuelCost').value);
-        const publicTransportUsage = parseFloat(document.getElementById('publicTransportUsage').value);
-        const domesticFlights = parseFloat(document.getElementById('domesticFlights').value);
-        const internationalFlights = parseFloat(document.getElementById('internationalFlights').value);
+        const fuelCost = parseFloat(document.getElementById('fuelCost').value) || 0;
+        const publicTransportUsage = parseFloat(document.getElementById('publicTransportUsage').value) || 0;
+        const domesticFlights = parseFloat(document.getElementById('domesticFlights').value) || 0;
+        const internationalFlights = parseFloat(document.getElementById('internationalFlights').value) || 0;
 
-        if (!isNaN(householdMembers) && !isNaN(electricityCost) && !isNaN(waterCost) && !isNaN(gasCost) && !isNaN(fuelCost) && !isNaN(publicTransportUsage) && !isNaN(domesticFlights) && !isNaN(internationalFlights)) {
-            const result = householdMembers * 100; // Ejemplo de cálculo
+        if (!isNaN(householdMembers) && !isNaN(electricityCost)) {
+            let electricitResult = (electricityCost * 0.0015284) / householdMembers; // Cálculo basado en la fórmula proporcionada
+            let waterResult = (waterCost * 0.0051022) / householdMembers; // Cálculo basado en la fórmula proporcionada
+            let gasResult = (gasCost * 0.0051022) / householdMembers; // Cálculo basado en la fórmula proporcionada
+            let fuelResult = (fuelCost * 0.0051821) / householdMembers; // Cálculo basado en la fórmula proporcionada
+            let publicTransportResult = (publicTransportUsage * 0.0154507) / householdMembers; // Cálculo basado en la fórmula proporcionada
+            let domesticFlightsResult = (domesticFlights * 0.1443011) / householdMembers; // Cálculo basado en la fórmula proporcionada
+            let internationalFlightsResult = (internationalFlights * 1.9240152) / householdMembers; // Cálculo basado en la fórmula proporcionada
+            const total = electricitResult + waterResult + gasResult + fuelResult + publicTransportResult + domesticFlightsResult + internationalFlightsResult;
             const resultElement = document.getElementById('result');
-            resultElement.innerText = `Huella de Carbono: ${result}`;
-            resultElement.style.display = 'block';
+            resultElement.innerText = `Huella de Carbono: ${total.toFixed(2)}`;
+            $('#carouselExampleIndicators').carousel('next');
             confettiAnimation();
         } else {
             document.getElementById('result').innerText = 'Por favor, ingrese valores válidos.';
