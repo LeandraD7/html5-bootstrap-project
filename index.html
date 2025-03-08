@@ -38,7 +38,7 @@
                             <input type="text" class="form-control" id="householdMembers" placeholder="Ingrese el número de personas" oninput="validateNumberInput(this)">
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('next')">Siguiente</button>
+                            <button class="btn btn-secondary" onclick="validateAndNext(this)">Siguiente</button>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -49,7 +49,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('prev')">Anterior</button>
-                            <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('next')">Siguiente</button>
+                            <button class="btn btn-secondary" onclick="validateAndNext(this)">Siguiente</button>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -61,7 +61,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('prev')">Anterior</button>
-                            <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('next')">Siguiente</button>
+                            <button class="btn btn-secondary" onclick="validateAndNext(this)">Siguiente</button>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -72,7 +72,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('prev')">Anterior</button>
-                            <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('next')">Siguiente</button>
+                            <button class="btn btn-secondary" onclick="validateAndNext(this)">Siguiente</button>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -83,7 +83,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('prev')">Anterior</button>
-                            <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('next')">Siguiente</button>
+                            <button class="btn btn-secondary" onclick="validateAndNext(this)">Siguiente</button>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -93,7 +93,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('prev')">Anterior</button>
-                            <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('next')">Siguiente</button>
+                            <button class="btn btn-secondary" onclick="validateAndNext(this)">Siguiente</button>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -103,7 +103,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('prev')">Anterior</button>
-                            <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('next')">Siguiente</button>
+                            <button class="btn btn-secondary" onclick="validateAndNext(this)">Siguiente</button>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -113,20 +113,21 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('prev')">Anterior</button>
-                            <button class="btn btn-secondary" onclick="$('#carouselExampleIndicators').carousel('next')">Siguiente</button>
+                            <button class="btn btn-secondary" onclick="validateAndNext(this)">Siguiente</button>
 
                         </div>
                     </div>
                     <div class="carousel-item">
                         <button class="btn btn-primary" onclick="calculateCarbonFootprint()">Calcular Huella de Carbono</button>
-
                     </div>
-
+                    <div class="carousel-item">
+                        <div id="resultSlide" class="text-center">
+                            <h2>Resultado de Huella de Carbono</h2>
+                            <p id="result"></p>
+                        </div>
+                    </div>
                 </div>
                 
-            </div>
-            <div class="mt-3">
-                <p id="result"></p>
             </div>
         </main>
         <footer class="mt-4">
@@ -139,62 +140,85 @@
     <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
-        function validateNumberInput(input) {
-            input.value = input.value.replace(/[^0-9.]/g, '');
+    function validateNumberInput(input) {
+        input.value = input.value.replace(/[^0-9.]/g, '');
+    }
+
+    function calculateCarbonFootprint() {
+        const householdMembers = parseFloat(document.getElementById('householdMembers').value);
+        const electricityCost = parseFloat(document.getElementById('electricityCost').value);
+        const waterCost = parseFloat(document.getElementById('waterCost').value);
+        const gasCost = parseFloat(document.getElementById('gasCost').value);
+        const fuelCost = parseFloat(document.getElementById('fuelCost').value);
+        const publicTransportUsage = parseFloat(document.getElementById('publicTransportUsage').value);
+        const domesticFlights = parseFloat(document.getElementById('domesticFlights').value);
+        const internationalFlights = parseFloat(document.getElementById('internationalFlights').value);
+
+        if (!isNaN(householdMembers) && !isNaN(electricityCost) && !isNaN(waterCost) && !isNaN(gasCost) && !isNaN(fuelCost) && !isNaN(publicTransportUsage) && !isNaN(domesticFlights) && !isNaN(internationalFlights)) {
+            const result = householdMembers * 100; // Ejemplo de cálculo
+            const resultElement = document.getElementById('result');
+            resultElement.innerText = `Huella de Carbono: ${result}`;
+            resultElement.style.display = 'block';
+            confettiAnimation();
+        } else {
+            document.getElementById('result').innerText = 'Por favor, ingrese valores válidos.';
         }
+    }
 
-        function calculateCarbonFootprint() {
-            debugger
-            const householdMembers = parseFloat(document.getElementById('householdMembers').value);
-            const electricityCost = parseFloat(document.getElementById('electricityCost').value);
-            const waterCost = parseFloat(document.getElementById('waterCost').value);
-            const gasCost = parseFloat(document.getElementById('gasCost').value);
-            const fuelCost = parseFloat(document.getElementById('fuelCost').value);
-            const publicTransportUsage = parseFloat(document.getElementById('publicTransportUsage').value);
-            const domesticFlights = parseFloat(document.getElementById('domesticFlights').value);
-            const internationalFlights = parseFloat(document.getElementById('internationalFlights').value);
+    function confettiAnimation() {
+        const duration = 2 * 1000;
+        const end = Date.now() + duration;
 
-            if (!isNaN(householdMembers) && !isNaN(electricityCost) && !isNaN(waterCost) && !isNaN(gasCost) && !isNaN(fuelCost) && !isNaN(publicTransportUsage) && !isNaN(domesticFlights) && !isNaN(internationalFlights)) {
-                const result = householdMembers * 100; // Ejemplo de cálculo
-                const resultElement = document.getElementById('result');
-                resultElement.innerText = `Huella de Carbono: ${result}`;
-                resultElement.style.display = 'block';
-                confettiAnimation();
-            } else {
-                document.getElementById('result').innerText = 'Por favor, ingrese valores válidos.';
+        (function frame() {
+            confetti({
+                particleCount: 2,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+            confetti({
+                particleCount: 2,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
             }
-        }
+        }());
+    }
 
-        function confettiAnimation() {
-            const duration = 2 * 1000;
-            const end = Date.now() + duration;
+    function validateAndNext(button) {
+        const currentSlide = button.closest('.carousel-item');
+        const inputs = currentSlide.querySelectorAll('input');
+        let allValid = true;
 
-            (function frame() {
-                confetti({
-                    particleCount: 2,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 }
-                });
-                confetti({
-                    particleCount: 2,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 }
-                });
+        inputs.forEach(input => {
+            const inputId = input.id;
+            const isOptional = inputId === 'fuelCost' || inputId === 'publicTransportUsage' || inputId === 'domesticFlights' || inputId === 'internationalFlights';
 
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
-        }
-
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                $('#carouselExampleIndicators').carousel('next');
+            if (!isOptional && input.value.trim() === '') {
+                allValid = false;
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
             }
         });
-    </script>
+
+        if (allValid) {
+            $('#carouselExampleIndicators').carousel('next');
+        } else {
+            alert('Por favor, complete todos los campos obligatorios.');
+        }
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            $('#carouselExampleIndicators').carousel('next');
+        }
+    });
+</script>
 </body>
 </html>
