@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <style>
         #result {
-            display: none;
+            
             text-align: center;
             font-size: 24px;
             font-weight: bold;
@@ -164,6 +164,7 @@
             let internationalFlightsResult = (internationalFlights * 1.9240152) / householdMembers; // Cálculo basado en la fórmula proporcionada
             const total = electricitResult + waterResult + gasResult + fuelResult + publicTransportResult + domesticFlightsResult + internationalFlightsResult;
             const resultElement = document.getElementById('result');
+            
             resultElement.innerText = `Huella de Carbono: ${total.toFixed(2)}`;
             $('#carouselExampleIndicators').carousel('next');
             confettiAnimation();
